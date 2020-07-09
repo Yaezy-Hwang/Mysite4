@@ -1,6 +1,8 @@
 package com.javaex.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,4 +31,14 @@ public class GuestbookService {
 		return dao.insert(gVo);
 	}
 
+	public int delete(int no, String pw) {
+		System.out.println("service.삭제");
+		
+		Map<String, Object> gMap = new HashMap<>();
+		gMap.put("no", no);
+		gMap.put("pw", pw);
+		
+		return dao.delete(gMap);
+	}
+	
 }
