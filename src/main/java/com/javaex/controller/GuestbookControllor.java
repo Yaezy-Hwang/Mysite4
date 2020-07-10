@@ -41,14 +41,14 @@ public class GuestbookControllor {
 		return "redirect:/guestbook/addList";
 	}
 	
-	@RequestMapping("deleteForm")
+	@RequestMapping("/deleteForm")
 	public String deleteForm() {
 		System.out.println("con.삭제폼 이동");
 		
 		return "guestbook/deleteForm";
 	}
 	
-	@RequestMapping("delete")
+	@RequestMapping("/delete")
 	public String delete(@RequestParam("no") int no, @RequestParam("pw") String pw) {
 		System.out.println("con.삭제");
 		
@@ -58,7 +58,7 @@ public class GuestbookControllor {
 		if(count != 0) { //비번 일치
 			return "redirect:/guestbook/addList";
 		} else {//비번 불일치
-			return "redirect:/guestbook/deleteForm?result=fail";
+			return "redirect:/guestbook/deleteForm?result=fail&no="+no;
 		}
 	}
 	

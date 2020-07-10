@@ -49,7 +49,7 @@
 			
 			UPDATE board
 			SET title = #{title},
-   				content = #{title}
+   				content = #{content}
 			WHERE no = #{no}
 			
 		]]>
