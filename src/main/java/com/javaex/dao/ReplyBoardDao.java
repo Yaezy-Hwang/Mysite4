@@ -16,51 +16,64 @@ public class ReplyBoardDao {
 	private SqlSession sqlSession;
 
 	public List<ReplyVo> selectList(Map<String, Object> pageMap) {
-		System.out.println("dao.게시글 가져오기");
+		System.out.println("re.dao.게시글 가져오기");
 		
 		return sqlSession.selectList("replyboard.selectList", pageMap);
 	}
 	
 	public int count(String keyword) {
-		System.out.println("dao.count");
+		System.out.println("re.dao.count");
 		
 		return sqlSession.selectOne("replyboard.count", keyword);
 	}
 	
 	public ReplyVo select(int no) {
-		System.out.println("dao.select");
+		System.out.println("re.dao.select");
 		
 		return sqlSession.selectOne("replyboard.select", no);
 	}
 
 	public int update(ReplyVo replyVo) {
-		System.out.println("dao.update");
+		System.out.println("re.dao.update");
 		
 		return sqlSession.update("replyboard.update", replyVo);
 	}
 	
 	public int delete(int no) {
-		System.out.println("dao.delete");
+		System.out.println("re.dao.delete");
 		
-		return sqlSession.delete("replyboard.delete", no);
+		return sqlSession.update("replyboard.upDelete", no);
 	}
 
 	public int insert(ReplyVo replyVo) {
-		System.out.println("dao.insert");
+		System.out.println("re.dao.insert");
+		
+		System.out.println("dao다오"+replyVo);
 		
 		return sqlSession.insert("replyboard.insert", replyVo);
 	}
 	
-	public List<ReplyVo> selectKeyword(String keyword) {
-		System.out.println("dao.search");
-		
-		return sqlSession.selectList("replyboard.search", keyword);
-	}
-	
 	public void hitUp(int no) {
-		System.out.println("dao.hitup");
+		System.out.println("re.dao.hitup");
 		
 		sqlSession.update("replyboard.updateHit", no);
+	}
+	
+	public int selectGroupNo() {
+		System.out.println("re.dao.그룹넘버");
+		
+		return sqlSession.selectOne("replyboard.selectGroupNo");
+	}
+	
+	public int selectOrderNo(int groupNo) {
+		System.out.println("re.dao.그룹넘버");
+		
+		System.out.println(groupNo);
+		
+		int no = sqlSession.selectOne("replyboard.selectOrderNo", groupNo);
+		System.out.println("넘버는"+no);
+		
+		return no;
 	}
 
 }

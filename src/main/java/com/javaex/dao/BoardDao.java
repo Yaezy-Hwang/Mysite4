@@ -51,12 +51,6 @@ public class BoardDao {
 		return sqlSession.insert("board.insert", boardVo);
 	}
 	
-	public List<BoardVo> selectKeyword(String keyword) {
-		System.out.println("dao.search");
-		
-		return sqlSession.selectList("board.search", keyword);
-	}
-	
 	public void hitUp(int no) {
 		System.out.println("dao.hitup");
 		

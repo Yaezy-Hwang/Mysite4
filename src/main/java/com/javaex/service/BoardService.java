@@ -16,14 +16,14 @@ public class BoardService {
 	@Autowired
 	private BoardDao dao;
 	
-	public List<BoardVo> showList(int page) {
+	public List<BoardVo> showList(int page, String keyword) {
 		System.out.println("service.게시글 가져오기");
 		
 		Map<String, Object> pageMap = new HashMap<>();
 		
 		pageMap.put("end", (1+(page-1)*7)+6);
 		pageMap.put("start", 1+(page-1)*7);
-		pageMap.put("keyword", "");
+		pageMap.put("keyword", keyword);
 		
 		return dao.selectList(pageMap);
 	}
@@ -32,6 +32,20 @@ public class BoardService {
 		System.out.println("service.카운트");
 		
 		return dao.count(keyword);
+	}
+	
+	public int[] countArr() {
+		int count = count("");
+		
+		count = (int)Math.ceil(count/5.0);
+		
+		int[] arr = new int[count];
+		
+		for(int i = 0; i < count; i++) {
+			arr[i] = i+1;
+		}
+		
+		return arr;
 	}
 
 	public BoardVo read(int no) {
@@ -60,10 +74,4 @@ public class BoardService {
 		return dao.insert(boardVo);
 	}
 	
-	public List<BoardVo> search(String keyword) {
-		System.out.println("service.검색");
-		
-		return dao.selectKeyword(keyword);
-	}
-
 }

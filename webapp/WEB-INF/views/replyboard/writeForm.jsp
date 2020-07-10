@@ -40,7 +40,16 @@
 
 			<div id="board">
 				<div id="writeForm">
-					<form action="${pageContext.request.contextPath}/board/write" method="get">
+				
+					<form action="${pageContext.request.contextPath}/replyboard/write" method="get">
+						<c:choose>
+							<c:when test="${empty param.groupNo}"> <!-- 일반게시글인경우 -->
+								<input type="hidden" name="groupNo" value="0">
+							</c:when>
+							<c:otherwise> <!-- 댓글인 경우 -->
+								<input type="hidden" name="groupNo" value="${param.groupNo}">
+							</c:otherwise> 
+						</c:choose>
 					<input type="hidden" name="userNo" value="${authUser.no}">
 						<!-- 제목 -->
 						<div class="form-group">
@@ -53,7 +62,7 @@
 							<textarea id="txt-content" name="content"></textarea>
 						</div>
 						
-						<a id="btn_cancel" href="${pageContext.request.contextPath}/board/list?page=1">취소</a>
+						<a id="btn_cancel" href="${pageContext.request.contextPath}/replyboard/list?page=1">취소</a>
 						<button id="btn_add" type="submit" >등록</button>
 						
 					</form>

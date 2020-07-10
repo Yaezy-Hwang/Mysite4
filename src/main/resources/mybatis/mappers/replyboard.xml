@@ -6,7 +6,6 @@
 	<select id="selectList" parameterType="map" resultType="com.javaex.vo.ReplyVo">
 		<![CDATA[
 		
-		
 			SELECT ro, no, title, hit, reg_date "date", group_no "groupNo", order_no "orderNo", depth, del, user_no "userNo", name
 			FROM (SELECT ROWNUM ro, no, title, hit, reg_date, group_no, order_no, depth, del, user_no, name
 			       FROM (SELECT r.no no, r.title title, r.hit hit,
@@ -14,18 +13,41 @@
 			               r.group_no group_no, r.order_no order_no, r.depth depth, r.del del,
 			               r.user_no user_no, u.name name
 			         From replyboard r left outer join users u on r.user_no =  u.no
-			         order by no desc)
+			         order by group_no desc, order_no asc)
 			         where title like '%'|| #{keyword} ||'%' and ROWNUM <= #{end})
-			 where ro >= #{start}
+			where ro >= #{start}
+			order by ro asc
 					
 		]]>
 	</select>
-	
+
+	<!-- 페이징-게시물갯수 -->	
 	<select id="count" parameterType="String" resultType="int">
 		<![CDATA[
 		
 			SELECT count(no) no FROM replyboard WHERE title like '%' || #{keyword} || '%'
 		
+		]]>
+	</select>
+	
+	<!-- 그룹넘버 맥스 -->
+	<select id="selectGroupNo"  resultType="int">
+		<![CDATA[
+		
+			SELECT MAX(group_no)
+			FROM replyboard
+
+		]]>
+	</select>
+	
+	<!-- 오더넘버 맥스 -->
+	<select id="selectOrderNo"  parameterType="int" resultType="int">
+		<![CDATA[
+		
+			SELECT MAX(order_no)
+			FROM replyboard
+			WHERE group_no = #{groupNo} 
+
 		]]>
 	</select>
 	
@@ -40,6 +62,9 @@
 			       r.title title,
 			       r.content content,
 			       r.user_no "userNo",
+			       r.group_no "groupNo",
+			       r.order_no "orderNo",
+			       r.depth depth,
 			       r.del del
 			FROM replyboard r left outer join users u
 			ON r.user_no =  u.no
@@ -60,22 +85,23 @@
 		]]>
 	</update>
 	
-	<!-- 삭제 -->
-	<delete id="delete" parameterType="com.javaex.vo.ReplyVo">
+	<!-- 삭제처리 (db유지) -->
+	<update id="upDelete" parameterType="com.javaex.vo.ReplyVo">
 		<![CDATA[
-		
-			DELETE FROM replyboard
+			
+			UPDATE replyboard
+			SET del = 'true'
 			WHERE no = #{no}
-		
+			
 		]]>
-	</delete>
+	</update>
 	
 	<!-- 메인 글쓰기 -->
 	<insert id="insert" parameterType="com.javaex.vo.ReplyVo">
 		<![CDATA[
 	
 			INSERT INTO replyboard
-			VALUES(seq_reply_no.nextval, #{title}, #{content}, 0, sysdate, #{userNo})
+			VALUES (seq_reply_no.nextval, #{userNo}, #{title}, #{content}, 0, sysdate, #{groupNo}, #{orderNo}, #{depth}, 'false')
 	
 		]]>
 	</insert>

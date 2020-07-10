@@ -45,6 +45,7 @@
 					<form action="${pageContext.request.contextPath}/board/search"
 						method="get">
 						<div class="form-group text-right">
+							<input type="hidden" name="page" value="1">
 							<input type="text" name="keyword">
 							<button type="submit" id=btn_search>검색</button>
 						</div>

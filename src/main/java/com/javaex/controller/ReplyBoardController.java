@@ -23,7 +23,7 @@ public class ReplyBoardController {
 	public String list(Model model, @RequestParam("page") int page) {
 		System.out.println("re.con.게시글보이기");
 	
-		List<ReplyVo> bList = service.showList(page);
+		List<ReplyVo> bList = service.showList(page, "");
 		System.out.println(bList);
 		
 		int count = service.count("");
@@ -39,23 +39,30 @@ public class ReplyBoardController {
 	@RequestMapping("/read")
 	public String read(Model model, @RequestParam("no") int no) {
 		System.out.println("re.con.읽기");
-		model.addAttribute("post", service.read(no));
+		
+		ReplyVo vo = service.read(no);
+		System.out.println(vo);
+		
+		model.addAttribute("post", vo);
 		
 		return "replyboard/read";
 	}
 	
 	@RequestMapping("/writeForm")
 	public String writeForm() {
+		System.out.println("re.con.쓰기폼");
 		
 		return "replyboard/writeForm";
 	}
 	
 	@RequestMapping("/write")
-	public String write(@ModelAttribute ReplyVo replyVo) {
+	public String write(@ModelAttribute ReplyVo replyVo, @RequestParam("groupNo") int groupNo) {
 		System.out.println("re.con.쓰기");
 		
 		System.out.println(replyVo);
-		service.write(replyVo);
+		
+		int no = service.write(replyVo, groupNo);
+		System.out.println(no);
 		
 		return "redirect:/replyboard/list?page=1";
 	}
@@ -88,15 +95,17 @@ public class ReplyBoardController {
 	}
 	
 	@RequestMapping("/search")
-	public String search(Model model, @RequestParam("keyword") String keyword) {
+	public String search(Model model, @RequestParam("page") int page, @RequestParam("keyword") String keyword) {
 		
-		List<ReplyVo> bList = service.search(keyword);
+		List<ReplyVo> bList = service.showList(page, keyword);
 		System.out.println(bList);
 		
 		int count = service.count(keyword);
+		int[] arr = service.countArr();
 		
 		model.addAttribute("bList", bList);
 		model.addAttribute("count", count);
+		model.addAttribute("arr", arr);
 		
 		return "replyboard/list";
 		

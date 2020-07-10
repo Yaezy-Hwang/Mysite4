@@ -42,9 +42,10 @@
 
 			<div id="board">
 				<div id="list">
-					<form action="${pageContext.request.contextPath}/board/search"
+					<form action="${pageContext.request.contextPath}/replyboard/search"
 						method="get">
 						<div class="form-group text-right">
+							<input type="hidden" name="page" value="1">
 							<input type="text" name="keyword">
 							<button type="submit" id=btn_search>검색</button>
 						</div>
@@ -64,7 +65,19 @@
 							<c:forEach items="${bList}" var="post">
 								<tr>
 									<td>${count - (post.ro-1)}</td>
-									<td class="text-left"><a href="${pageContext.request.contextPath}/replyboard/read?no=${post.no}&groupNo=${post.groupNo}&orderNo=${post.orderNo}">${post.title}</a></td>
+									<td class="text-left">
+										<c:choose>
+											<c:when test="${post.del eq 'true'}"> <!-- 삭제되었을 경우 -->
+												삭제된 게시글입니다.
+											</c:when>
+											<c:when test="${post.depth eq 1}"> <!-- 댓글일 경우 -->
+												<a href="${pageContext.request.contextPath}/replyboard/read?no=${post.no}"> Re: ${post.title}</a>
+											</c:when>
+											<c:otherwise> <!-- 일반 정상 게시물일 정우 -->
+												<a href="${pageContext.request.contextPath}/replyboard/read?no=${post.no}">${post.title}</a>
+											</c:otherwise>
+										</c:choose>
+									</td>
 									<td>${post.name}</td>
 									<td>${post.hit}</td>
 									<td>${post.date}</td>
@@ -85,8 +98,7 @@
 							<c:forEach items="${arr}" var="page">
 
 								<li <c:if test="${param.page eq page}"> class="active" </c:if>>
-									<a
-									href="${pageContext.request.contextPath}/replyboard/list?page=${page}">${page}</a>
+									<a href="${pageContext.request.contextPath}/replyboard/list?page=${page}">${page}</a>
 								</li>
 
 							</c:forEach>

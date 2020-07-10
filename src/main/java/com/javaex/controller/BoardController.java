@@ -23,7 +23,7 @@ public class BoardController {
 	public String list(Model model, @RequestParam("page") int page) {
 		System.out.println("con.게시글보이기");
 	
-		List<BoardVo> bList = service.showList(page);
+		List<BoardVo> bList = service.showList(page, "");
 		
 		int count = service.count("");
 		model.addAttribute("count", count);
@@ -94,15 +94,17 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/search")
-	public String search(Model model, @RequestParam("keyword") String keyword) {
+	public String search(Model model, @RequestParam("page") int page, @RequestParam("keyword") String keyword) {
 		
-		List<BoardVo> bList = service.search(keyword);
+		List<BoardVo> bList = service.showList(page, keyword);
 		System.out.println(bList);
 		
 		int count = service.count(keyword);
+		int[] arr = service.countArr();
 		
 		model.addAttribute("bList", bList);
 		model.addAttribute("count", count);
+		model.addAttribute("arr", arr);
 		
 		return "board/list";
 		
