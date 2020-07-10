@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="replyboard">
+
+	<select id="selectList" parameterType="map" resultType="com.javaex.vo.ReplyVo">
+		<![CDATA[
+		
+		
+			SELECT ro, no, title, hit, reg_date "date", group_no "groupNo", order_no "orderNo", depth, del, user_no "userNo", name
+			FROM (SELECT ROWNUM ro, no, title, hit, reg_date, group_no, order_no, depth, del, user_no, name
+			       FROM (SELECT r.no no, r.title title, r.hit hit,
+			               to_char(r.reg_date,'yy-mm-dd hh24:mi') reg_date,
+			               r.group_no group_no, r.order_no order_no, r.depth depth, r.del del,
+			               r.user_no user_no, u.name name
+			         From replyboard r left outer join users u on r.user_no =  u.no
+			         order by no desc)
+			         where title like '%'|| #{keyword} ||'%' and ROWNUM <= #{end})
+			 where ro >= #{start}
+					
+		]]>
+	</select>
+	
+	<select id="count" parameterType="String" resultType="int">
+		<![CDATA[
+		
+			SELECT count(no) no FROM replyboard WHERE title like '%' || #{keyword} || '%'
+		
+		]]>
+	</select>
+	
+	<!-- 게시글 읽기 -->
+	<select id="select" parameterType="int" resultType="com.javaex.vo.ReplyVo">
+		<![CDATA[
+		
+			SELECT r.no no,
+			       u.name name,
+			       r.hit hit,
+			       to_char(r.reg_date, 'yyyy-mm-dd') "date",
+			       r.title title,
+			       r.content content,
+			       r.user_no "userNo",
+			       r.del del
+			FROM replyboard r left outer join users u
+			ON r.user_no =  u.no
+			WHERE r.no = #{no}
+		
+		]]>
+	</select>
+	
+	<!-- 수정 -->
+	<update id="update" parameterType="com.javaex.vo.ReplyVo">
+		<![CDATA[
+			
+			UPDATE replyboard
+			SET title = #{title},
+   				content = #{content}
+			WHERE no = #{no}
+			
+		]]>
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="delete" parameterType="com.javaex.vo.ReplyVo">
+		<![CDATA[
+		
+			DELETE FROM replyboard
+			WHERE no = #{no}
+		
+		]]>
+	</delete>
+	
+	<!-- 메인 글쓰기 -->
+	<insert id="insert" parameterType="com.javaex.vo.ReplyVo">
+		<![CDATA[
+	
+			INSERT INTO replyboard
+			VALUES(seq_reply_no.nextval, #{title}, #{content}, 0, sysdate, #{userNo})
+	
+		]]>
+	</insert>
+	
+	
+	<update id="updateHit" parameterType="int">
+		<![CDATA[
+			
+			UPDATE replyboard
+			SET hit= hit+1
+			WHERE no = #{no}
+			
+		]]>
+	</update>
+
+</mapper>

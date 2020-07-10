@@ -64,14 +64,14 @@
 							<c:forEach items="${bList}" var="post">
 								<tr>
 									<td>${count - (post.ro-1)}</td>
-									<td class="text-left"><a href="${pageContext.request.contextPath}/board/read?no=${post.no}">${post.title}</a></td>
+									<td class="text-left"><a href="${pageContext.request.contextPath}/replyboard/read?no=${post.no}&groupNo=${post.groupNo}&orderNo=${post.orderNo}">${post.title}</a></td>
 									<td>${post.name}</td>
 									<td>${post.hit}</td>
 									<td>${post.date}</td>
 									<td><c:if test="${authUser.no eq post.userNo}">
 											<!-- 로그인시 -->
 											<a
-												href="${pageContext.request.contextPath}/board/delete?no=${post.no}">[삭제]</a>
+												href="${pageContext.request.contextPath}/replyboard/delete?no=${post.no}">[삭제]</a>
 										</c:if></td>
 								</tr>
 							</c:forEach>
@@ -81,12 +81,12 @@
 					<div id="paging">
 						<ul>
 							<li><a
-								href="${pageContext.request.contextPath}/board/list&page=1">◀</a></li>
+								href="${pageContext.request.contextPath}/replyboard/list&page=1">◀</a></li>
 							<c:forEach items="${arr}" var="page">
 
 								<li <c:if test="${param.page eq page}"> class="active" </c:if>>
 									<a
-									href="${pageContext.request.contextPath}/board/list?page=${page}">${page}</a>
+									href="${pageContext.request.contextPath}/replyboard/list?page=${page}">${page}</a>
 								</li>
 
 							</c:forEach>
@@ -97,7 +97,7 @@
 						<div class="clear"></div>
 					</div>
 					<c:if test="${!empty authUser}"><!-- 로그인시 -->
-						<a id="btn_write" href="${pageContext.request.contextPath}/board/writeForm">글쓰기</a>
+						<a id="btn_write" href="${pageContext.request.contextPath}/replyboard/writeForm">글쓰기</a>
 					</c:if>
 				</div>
 				<!-- //list -->

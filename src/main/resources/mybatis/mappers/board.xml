@@ -13,7 +13,7 @@
 			 			   b.user_no user_no, u.name name
 			 		 From board b left outer join users u on b.user_no =  u.no
 			 		 order by no desc)
-			 		 where ROWNUM <= #{end})
+			 		 where title like '%' || #{keyword} || '%' and ROWNUM <= #{end})
 			 where ro >= #{start}
 			
 		]]>
@@ -22,7 +22,7 @@
 	<select id="count" parameterType="String" resultType="int">
 		<![CDATA[
 		
-			SELECT count(no) no FROM board WHERE title like #{keyword}
+			SELECT count(no) no FROM board WHERE title like '%' || #{keyword} || '%'
 		
 		]]>
 	</select>
@@ -82,7 +82,7 @@
 			             b.user_no user_no, u.name name
 			        from board b left outer join users u on b.user_no =  u.no
 			        order by b.no desc)
-			where title like #{keyword}
+			where title like '%' || #{keyword} || '%'
 			order by ROWNUM asc				
 			
 		]]>
