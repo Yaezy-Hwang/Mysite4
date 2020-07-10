@@ -64,7 +64,7 @@
 						<tbody>
 							<c:forEach items="${bList}" var="post">
 								<tr>
-									<td>${count - (post.ro-1)}</td>
+									<td>${countMap.countAll - (post.ro-1)}</td>
 									<td class="text-left"><a href="${pageContext.request.contextPath}/board/read?no=${post.no}">${post.title}</a></td>
 									<td>${post.name}</td>
 									<td>${post.hit}</td>
@@ -83,7 +83,7 @@
 						<ul>
 							<li><a
 								href="${pageContext.request.contextPath}/board/list&page=1">◀</a></li>
-							<c:forEach items="${arr}" var="page">
+							<c:forEach var="page" begin="1" end="${countMap.count}">
 
 								<li <c:if test="${param.page eq page}"> class="active" </c:if>>
 									<a

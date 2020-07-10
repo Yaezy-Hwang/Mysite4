@@ -28,26 +28,16 @@ public class ReplyBoardService {
 		return dao.selectList(pageMap);
 	}
 	
-	public int count(String keyword) {
+	public Map<String, Integer> count(String keyword) {
 		System.out.println("service.카운트");
 		
-		return dao.count(keyword);
+		Map<String, Integer> countMap= new HashMap<>();
+		countMap.put("countAll", dao.count(keyword));
+		countMap.put("count", (int)Math.ceil(countMap.get("countAll")/5.0));
+		
+		return countMap;
 	}
 	
-	public int[] countArr() {
-		int count = count("");
-		
-		count = (int)Math.ceil(count/5.0);
-		
-		int[] arr = new int[count];
-		
-		for(int i = 0; i < count; i++) {
-			arr[i] = i+1;
-		}
-		
-		return arr;
-	}
-
 	public ReplyVo read(int no) {
 		System.out.println("service.읽기");
 		

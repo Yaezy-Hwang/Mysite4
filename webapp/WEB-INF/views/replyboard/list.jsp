@@ -64,14 +64,19 @@
 						<tbody>
 							<c:forEach items="${bList}" var="post">
 								<tr>
-									<td>${count - (post.ro-1)}</td>
+									<td>${countMap.countAll - (post.ro-1)}</td>
 									<td class="text-left">
 										<c:choose>
 											<c:when test="${post.del eq 'true'}"> <!-- 삭제되었을 경우 -->
 												삭제된 게시글입니다.
 											</c:when>
-											<c:when test="${post.depth eq 1}"> <!-- 댓글일 경우 -->
-												<a href="${pageContext.request.contextPath}/replyboard/read?no=${post.no}"> Re: ${post.title}</a>
+											<c:when test="${post.depth ge 1}"> <!-- 댓글일 경우 -->
+												<a href="${pageContext.request.contextPath}/replyboard/read?no=${post.no}">
+													<c:forEach begin="1" end="${post.depth}">
+														Re:
+													</c:forEach>
+													${post.title}
+												</a>
 											</c:when>
 											<c:otherwise> <!-- 일반 정상 게시물일 정우 -->
 												<a href="${pageContext.request.contextPath}/replyboard/read?no=${post.no}">${post.title}</a>
@@ -95,16 +100,16 @@
 						<ul>
 							<li><a
 								href="${pageContext.request.contextPath}/replyboard/list&page=1">◀</a></li>
-							<c:forEach items="${arr}" var="page">
+							<c:forEach var="page" begin="1" end="${countMap.count}">
 
 								<li <c:if test="${param.page eq page}"> class="active" </c:if>>
-									<a href="${pageContext.request.contextPath}/replyboard/list?page=${page}">${page}</a>
+									<a
+									href="${pageContext.request.contextPath}/replyboard/list?page=${page}">${page}</a>
 								</li>
 
 							</c:forEach>
 							<li><a href="">▶</a></li>
 						</ul>
-
 
 						<div class="clear"></div>
 					</div>

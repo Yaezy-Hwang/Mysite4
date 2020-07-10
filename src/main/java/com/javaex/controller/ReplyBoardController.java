@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,14 +25,10 @@ public class ReplyBoardController {
 		System.out.println("re.con.게시글보이기");
 	
 		List<ReplyVo> bList = service.showList(page, "");
-		System.out.println(bList);
-		
-		int count = service.count("");
-		int[] arr = service.countArr();
+		Map<String, Integer> countMap= service.count("");
 		
 		model.addAttribute("bList", bList);
-		model.addAttribute("count", count);
-		model.addAttribute("arr", arr);
+		model.addAttribute("countMap", countMap);
 		
 		return "replyboard/list";
 	}
@@ -100,12 +97,10 @@ public class ReplyBoardController {
 		List<ReplyVo> bList = service.showList(page, keyword);
 		System.out.println(bList);
 		
-		int count = service.count(keyword);
-		int[] arr = service.countArr();
+		Map<String, Integer> countMap= service.count(keyword);
 		
 		model.addAttribute("bList", bList);
-		model.addAttribute("count", count);
-		model.addAttribute("arr", arr);
+		model.addAttribute("countMap", countMap);
 		
 		return "replyboard/list";
 		

@@ -1,6 +1,8 @@
 package com.javaex.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,19 +27,10 @@ public class BoardController {
 	
 		List<BoardVo> bList = service.showList(page, "");
 		
-		int count = service.count("");
-		model.addAttribute("count", count);
-		
-		count = (int)Math.ceil(count/5.0);
-		
-		int[] arr = new int[count];
-		
-		for(int i = 0; i < count; i++) {
-			arr[i] = i+1;
-		}
+		Map<String, Integer> countMap= service.count("");
 		
 		model.addAttribute("bList", bList);
-		model.addAttribute("arr", arr);
+		model.addAttribute("countMap", countMap);
 		
 		return "board/list";
 	}
@@ -97,14 +90,11 @@ public class BoardController {
 	public String search(Model model, @RequestParam("page") int page, @RequestParam("keyword") String keyword) {
 		
 		List<BoardVo> bList = service.showList(page, keyword);
-		System.out.println(bList);
 		
-		int count = service.count(keyword);
-		int[] arr = service.countArr();
+		Map<String, Integer> countMap= service.count(keyword);
 		
 		model.addAttribute("bList", bList);
-		model.addAttribute("count", count);
-		model.addAttribute("arr", arr);
+		model.addAttribute("countMap", countMap);
 		
 		return "board/list";
 		
