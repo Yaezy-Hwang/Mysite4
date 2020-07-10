@@ -71,8 +71,8 @@
 							</span>
 						</div>
 						<c:if test="${!empty authUser}"> <!-- 로그인시 댓글 쓰기 -->
-							<c:if test="${post.orderNo lt 2}">
-								<a id="btn_modify" href="${pageContext.request.contextPath}/replyboard/writeForm?groupNo=${post.groupNo}">댓글쓰기</a>
+							<c:if test="${post.orderNo lt 3}">
+								<a id="btn_modify" href="${pageContext.request.contextPath}/replyboard/writeForm?groupNo=${post.groupNo}&orderNo=${post.orderNo}&depth=${post.depth}">댓글쓰기</a>
 							</c:if>
 						</c:if>
 						<c:if test="${authUser.no eq post.userNo}">

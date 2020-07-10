@@ -65,15 +65,10 @@ public class ReplyBoardDao {
 		return sqlSession.selectOne("replyboard.selectGroupNo");
 	}
 	
-	public int selectOrderNo(int groupNo) {
+	public int updateOrderNo(ReplyVo replyVo) {
 		System.out.println("re.dao.그룹넘버");
 		
-		System.out.println(groupNo);
-		
-		int no = sqlSession.selectOne("replyboard.selectOrderNo", groupNo);
-		System.out.println("넘버는"+no);
-		
-		return no;
+		return sqlSession.update("replyboard.updateOrderNo", replyVo);
 	}
 
 }

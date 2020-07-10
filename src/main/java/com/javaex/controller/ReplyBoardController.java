@@ -53,12 +53,14 @@ public class ReplyBoardController {
 	}
 	
 	@RequestMapping("/write")
-	public String write(@ModelAttribute ReplyVo replyVo, @RequestParam("groupNo") int groupNo) {
+	public String write(@ModelAttribute ReplyVo replyVo,
+						@RequestParam("groupNo") int groupNo,
+						@RequestParam("orderNo") int orderNo) {
 		System.out.println("re.con.쓰기");
 		
 		System.out.println(replyVo);
 		
-		int no = service.write(replyVo, groupNo);
+		int no = service.write(replyVo, groupNo, orderNo);
 		System.out.println(no);
 		
 		return "redirect:/replyboard/list?page=1";

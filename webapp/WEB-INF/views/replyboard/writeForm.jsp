@@ -48,6 +48,8 @@
 							</c:when>
 							<c:otherwise> <!-- 댓글인 경우 -->
 								<input type="hidden" name="groupNo" value="${param.groupNo}">
+								<input type="hidden" name="orderNo" value="${param.orderNo}">
+								<input type="hidden" name="depth" value="${param.depth}">
 							</c:otherwise> 
 						</c:choose>
 					<input type="hidden" name="userNo" value="${authUser.no}">

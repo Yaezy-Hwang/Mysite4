@@ -33,7 +33,8 @@ public class ReplyBoardService {
 		
 		Map<String, Integer> countMap= new HashMap<>();
 		countMap.put("countAll", dao.count(keyword));
-		countMap.put("count", (int)Math.ceil(countMap.get("countAll")/5.0));
+		countMap.put("count", (int)Math.ceil(countMap.get("countAll")/7.0));
+		System.out.println(countMap.get("countAll"));
 		
 		return countMap;
 	}
@@ -58,7 +59,7 @@ public class ReplyBoardService {
 		return dao.delete(no);
 	}
 
-	public int write(ReplyVo replyVo, int groupNo) {
+	public int write(ReplyVo replyVo, int groupNo, int orderNo) {
 		int result = 0;
 		
 		if(groupNo == 0) {
@@ -73,10 +74,16 @@ public class ReplyBoardService {
 		} else {
 			System.out.println("service.댓글 쓰기");
 			
+			//오더넘버 올리기
+			int no = dao.updateOrderNo(replyVo);
+
 			replyVo.setGroupNo(groupNo);
-			replyVo.setOrderNo(dao.selectOrderNo(groupNo)+1);
-			replyVo.setDepth(1);
+			replyVo.setOrderNo(orderNo+1);
+			System.out.println("뎁스: "+replyVo.getDepth());
+			replyVo.setDepth(replyVo.getDepth()+1);
 		
+			System.out.println("update 됐니: "+no);
+			
 			result = dao.insert(replyVo);
 		}
 		

@@ -106,13 +106,25 @@
 		]]>
 	</insert>
 	
-	
+	<!-- 조회수 올리기 -->
 	<update id="updateHit" parameterType="int">
 		<![CDATA[
 			
 			UPDATE replyboard
 			SET hit= hit+1
 			WHERE no = #{no}
+			
+		]]>
+	</update>
+	
+	<!-- 오더넘버 +1하기 -->
+	<update id="updateOrderNo" parameterType="com.javaex.vo.ReplyVo">
+		<![CDATA[
+			
+			UPDATE replyboard
+			SET order_no = order_no+1
+			WHERE group_no = #{groupNo}
+			and order_no > #{orderNo}
 			
 		]]>
 	</update>

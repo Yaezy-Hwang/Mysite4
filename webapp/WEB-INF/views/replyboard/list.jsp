@@ -70,16 +70,13 @@
 											<c:when test="${post.del eq 'true'}"> <!-- 삭제되었을 경우 -->
 												삭제된 게시글입니다.
 											</c:when>
-											<c:when test="${post.depth ge 1}"> <!-- 댓글일 경우 -->
+											<c:otherwise> <!-- 댓글일 경우 -->
 												<a href="${pageContext.request.contextPath}/replyboard/read?no=${post.no}">
 													<c:forEach begin="1" end="${post.depth}">
 														Re:
 													</c:forEach>
 													${post.title}
 												</a>
-											</c:when>
-											<c:otherwise> <!-- 일반 정상 게시물일 정우 -->
-												<a href="${pageContext.request.contextPath}/replyboard/read?no=${post.no}">${post.title}</a>
 											</c:otherwise>
 										</c:choose>
 									</td>
@@ -88,8 +85,7 @@
 									<td>${post.date}</td>
 									<td><c:if test="${authUser.no eq post.userNo}">
 											<!-- 로그인시 -->
-											<a
-												href="${pageContext.request.contextPath}/replyboard/delete?no=${post.no}">[삭제]</a>
+											<a href="${pageContext.request.contextPath}/replyboard/delete?no=${post.no}">[삭제]</a>
 										</c:if></td>
 								</tr>
 							</c:forEach>

@@ -33,7 +33,7 @@ public class BoardService {
 		
 		Map<String, Integer> countMap= new HashMap<>();
 		countMap.put("countAll", dao.count(keyword));
-		countMap.put("count", (int)Math.ceil(countMap.get("countAll")/5.0));
+		countMap.put("count", (int)Math.ceil(countMap.get("countAll")/7.0));
 		
 		return countMap;
 	}
