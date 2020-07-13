@@ -59,10 +59,10 @@ public class ReplyBoardService {
 		return dao.delete(no);
 	}
 
-	public int write(ReplyVo replyVo, int groupNo, int orderNo) {
+	public int write(ReplyVo replyVo) {
 		int result = 0;
 		
-		if(groupNo == 0) {
+		if(replyVo.getGroupNo() == 0) {
 			System.out.println("service.쓰기");
 			
 			replyVo.setGroupNo(dao.selectGroupNo()+1);
@@ -77,8 +77,8 @@ public class ReplyBoardService {
 			//오더넘버 올리기
 			int no = dao.updateOrderNo(replyVo);
 
-			replyVo.setGroupNo(groupNo);
-			replyVo.setOrderNo(orderNo+1);
+			replyVo.setGroupNo(replyVo.getGroupNo());
+			replyVo.setOrderNo(replyVo.getOrderNo()+1);
 			System.out.println("뎁스: "+replyVo.getDepth());
 			replyVo.setDepth(replyVo.getDepth()+1);
 		

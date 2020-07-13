@@ -40,7 +40,7 @@
 
 			<div id="board">
 				<div id="modifyForm">
-					<form action="${pageContext.request.contextPath}/board/modify" method="get">
+					<form action="${pageContext.request.contextPath}/replyboard/modify" method="get">
 					<input type="hidden" name="no" value="${post.no}">
 						<!-- 작성자 -->
 						<div class="form-group">
@@ -73,7 +73,7 @@
 							</textarea>
 						</div>
 						
-						<a id="btn_cancel" href="${pageContext.request.contextPath}/board/read?no=${post.no}">취소</a>
+						<a id="btn_cancel" href="${pageContext.request.contextPath}/replyboard/read?no=${post.no}">취소</a>
 						<button id="btn_modify" type="submit" >수정</button>
 						
 					</form>

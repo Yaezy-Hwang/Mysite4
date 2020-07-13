@@ -42,16 +42,9 @@
 				<div id="writeForm">
 				
 					<form action="${pageContext.request.contextPath}/replyboard/write" method="get">
-						<c:choose>
-							<c:when test="${empty param.groupNo}"> <!-- 일반게시글인경우 -->
-								<input type="hidden" name="groupNo" value="0">
-							</c:when>
-							<c:otherwise> <!-- 댓글인 경우 -->
-								<input type="hidden" name="groupNo" value="${param.groupNo}">
-								<input type="hidden" name="orderNo" value="${param.orderNo}">
-								<input type="hidden" name="depth" value="${param.depth}">
-							</c:otherwise> 
-						</c:choose>
+					<input type="hidden" name="groupNo" value="${param.groupNo}">
+					<input type="hidden" name="orderNo" value="${param.orderNo}">
+					<input type="hidden" name="depth" value="${param.depth}">
 					<input type="hidden" name="userNo" value="${authUser.no}">
 						<!-- 제목 -->
 						<div class="form-group">

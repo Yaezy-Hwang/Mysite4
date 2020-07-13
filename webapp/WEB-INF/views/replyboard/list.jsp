@@ -68,7 +68,7 @@
 									<td class="text-left">
 										<c:choose>
 											<c:when test="${post.del eq 'true'}"> <!-- 삭제되었을 경우 -->
-												삭제된 게시글입니다.
+												삭제된 게시물입니다.
 											</c:when>
 											<c:otherwise> <!-- 댓글일 경우 -->
 												<a href="${pageContext.request.contextPath}/replyboard/read?no=${post.no}">
@@ -110,7 +110,7 @@
 						<div class="clear"></div>
 					</div>
 					<c:if test="${!empty authUser}"><!-- 로그인시 -->
-						<a id="btn_write" href="${pageContext.request.contextPath}/replyboard/writeForm">글쓰기</a>
+						<a id="btn_write" href="${pageContext.request.contextPath}/replyboard/writeForm?groupNo=0&orderNo=0&depth=0">글쓰기</a>
 					</c:if>
 				</div>
 				<!-- //list -->
