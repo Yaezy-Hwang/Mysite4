@@ -85,10 +85,16 @@
 								href="${pageContext.request.contextPath}/board/list&page=1">◀</a></li>
 							<c:forEach var="page" begin="1" end="${countMap.count}">
 
-								<li <c:if test="${param.page eq page}"> class="active" </c:if>>
-									<a
-									href="${pageContext.request.contextPath}/board/list?page=${page}">${page}</a>
-								</li>
+								<c:if test="${empty param.keyword}">
+									<li <c:if test="${param.page eq page}"> class="active" </c:if>>
+										<a href="${pageContext.request.contextPath}/board/list?page=${page}">${page}</a>
+									</li>
+								</c:if>
+								<c:if test="${!empty param.keyword}">
+									<li <c:if test="${param.page eq page}"> class="active" </c:if>>
+										<a href="${pageContext.request.contextPath}/board/search?page=${page}&keyword=${param.keyword}">${page}</a>
+									</li>
+								</c:if>
 
 							</c:forEach>
 							<li><a href="">▶</a></li>

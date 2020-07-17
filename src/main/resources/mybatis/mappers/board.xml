@@ -15,7 +15,6 @@
 			 		 order by no desc)
 			 		 where title like '%' || #{keyword} || '%' and ROWNUM <= #{end})
 			 where ro >= #{start}
-			
 		]]>
 	</select>
 	

@@ -56,8 +56,7 @@ public class ReplyBoardController {
 	public String write(@ModelAttribute ReplyVo replyVo) {
 		System.out.println("re.con.쓰기");
 		
-		int no = service.write(replyVo);
-		System.out.println(no);
+		service.write(replyVo);
 		
 		return "redirect:/replyboard/list?page=1";
 	}

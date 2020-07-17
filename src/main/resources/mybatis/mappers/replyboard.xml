@@ -14,11 +14,11 @@
 			               r.user_no user_no, u.name name
 			         From replyboard r left outer join users u on r.user_no =  u.no
 			         order by group_no desc, order_no asc)
-			         where title like '%'|| #{keyword} ||'%' and ROWNUM <= #{end})
+			         where title like '%'|| #{keyword} ||'%'        
+			         and ROWNUM <= #{end})
 			where ro >= #{start}
 			order by ro asc
-					
-		]]>
+			 ]]>
 	</select>
 
 	<!-- 페이징-게시물갯수 -->	
