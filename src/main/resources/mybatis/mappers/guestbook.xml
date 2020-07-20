@@ -2,8 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="guestbook">
-	
-	<select id = "selectList" parameterType= "com.javaex.vo.GuestbookVo" resultType="com.javaex.vo.GuestbookVo">
+
+	<select id="selectList"
+		parameterType="com.javaex.vo.GuestbookVo"
+		resultType="com.javaex.vo.GuestbookVo">
 		<![CDATA[
 			
 			SELECT ROWNUM ro, no, name, password pw, content, reg_date "date"
@@ -14,9 +16,9 @@
 
 		]]>
 	</select>
-	
-	
-	<insert id= "insert" parameterType="com.javaex.vo.GuestbookVo">
+
+
+	<insert id="insert" parameterType="com.javaex.vo.GuestbookVo">
 		<![CDATA[
 		
 		INSERT INTO guestbook
@@ -24,8 +26,8 @@
 		
 		]]>
 	</insert>
-	
-	
+
+
 	<delete id="delete" parameterType="map">
 		<![CDATA[
 		
@@ -35,7 +37,34 @@
 		
 		]]>
 	</delete>
+
+	<insert id="insertSelectKey" parameterType="com.javaex.vo.GuestbookVo">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT seq_no.nextval FROM dual
+		</selectKey>
+		
+		<![CDATA[
+		
+			INSERT INTO guestbook
+			VALUES(#{no}, #{name}, #{pw}, #{content}, sysdate)
+		
+		]]>
+	</insert>
 	
-	
+	<select id="selectByNo" parameterType="int" resultType="com.javaex.vo.GuestbookVo">
+		<![CDATA[
+			
+			SELECT ro, no, name, password pw, content, reg_date "date"
+			FROM(SELECT ROWNUM ro, no, name, password, content, reg_date
+			     FROM (SELECT no, name, password, content, reg_date
+			           FROM guestbook
+			           ORDER BY no asc)
+			     ORDER BY ROWNUM desc)
+		 	WHERE no = #{no}
+				
+		]]>
+	</select>
+
+
 </mapper>
 	

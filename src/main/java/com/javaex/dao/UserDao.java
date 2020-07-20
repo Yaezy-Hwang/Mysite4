@@ -33,4 +33,14 @@ public class UserDao {
 		return sqlSession.update("user.update", userVo);
 	}
 	
+	// 아이디 체크(ajax용)
+	public UserVo selectUser(String id) {
+		System.out.println("userDao.selectUser_By id");
+		System.out.println(id);
+		
+		UserVo userVo = sqlSession.selectOne("user.selectById", id);
+		
+		return userVo;
+	}
+	
 }

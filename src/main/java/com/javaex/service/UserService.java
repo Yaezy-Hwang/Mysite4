@@ -34,5 +34,14 @@ public class UserService {
 		
 		return count;
 	}
+
+	// 아이디 체크(ajax용)
+	public UserVo checkId(String id) {
+		System.out.println("userService:checkId");
+		
+		UserVo userVo = userDao.selectUser(id);
+		
+		return userVo;
+	}
 	
 }

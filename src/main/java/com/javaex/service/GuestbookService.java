@@ -40,5 +40,20 @@ public class GuestbookService {
 		
 		return dao.delete(gMap);
 	}
+
+	//방명록 글 저장(ajax)
+	public GuestbookVo addGuest(GuestbookVo guestbookVo) {
+		System.out.println("service.ajax 글저장");
+		
+		//저장
+		dao.insertSelectKey(guestbookVo);
+		
+		//방금 저장된 no 값 가져오기
+		int no = guestbookVo.getNo();
+		System.out.println("select 키로 받은 no:" + no);
+		
+		//저장한 data가져오기
+		return dao.selectByNo(no);
+	}
 	
 }

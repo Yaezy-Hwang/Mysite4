@@ -8,7 +8,7 @@
 			 	<c:when test="${empty authUser}">
 					<ul>
 						<li><a href="${pageContext.request.contextPath}/user/loginForm">로그인</a></li>
-						<li><a href="">회원가입</a></li>
+						<li><a href="${pageContext.request.contextPath}/user/joinForm">회원가입</a></li>
 					</ul>
 				</c:when>
 				<c:otherwise>
