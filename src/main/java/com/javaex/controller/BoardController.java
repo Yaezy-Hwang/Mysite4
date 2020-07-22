@@ -98,5 +98,18 @@ public class BoardController {
 		return "board/list";
 		
 	}
+	
+	//게시판 페이징
+	@RequestMapping("/list2")
+	public String list2(@RequestParam(value="crtPage", required=false, defaultValue="1") int crtPage, Model model) {
+		System.out.println("con.게시글보이기");
+	
+		Map<String, Object> pMap = service.list2(crtPage);
+		
+		model.addAttribute("pMap", pMap);
+		System.out.println(pMap);
+		
+		return "board/list2";
+	}
 
 }

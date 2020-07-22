@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -148,7 +149,6 @@
 	$("#btnDel").on("click", function(){
 		console.log("모달창>삭제버튼");
 		
-		
 		//데이터 수집
 		var password = $("#modalPassword").val();
 		var no = $("#modalNo").val();
@@ -178,7 +178,7 @@
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
 			}
-		})
+		});
 		
 		
 	});

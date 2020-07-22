@@ -81,5 +81,24 @@
 			
 		]]>
 	</update>
+	
+	<select id="select2" resultType="com.javaex.vo.BoardVo" parameterType="map">
+		<![CDATA[
+		
+			SELECT r.rn ro, r.no no, r.title, r.content, r.hit,
+				   r.reg_date "date", r.user_no "userNo", r.name
+			FROM (SELECT rownum rn, o.no, o.title, o.content, o.hit
+			            , o.reg_date , o.user_no, o.name
+			       FROM (SELECT b.no, title, content, hit
+								, reg_date, b.user_no, u.name
+			            FROM board b, users u
+			            where u.no = b.user_no
+			            order by no desc) o
+			      ) r
+			WHERE r.rn > #{startRnum}
+			AND r.rn <= #{endRnum}
+		
+		]]>
+	</select>
 
 </mapper>

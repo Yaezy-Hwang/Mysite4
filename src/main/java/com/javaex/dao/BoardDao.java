@@ -1,5 +1,6 @@
 package com.javaex.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +56,17 @@ public class BoardDao {
 		System.out.println("dao.hitup");
 		
 		sqlSession.update("board.updateHit", no);
+	}
+	
+	//게시판 페이징
+	public List<BoardVo> select2(int startRnum, int endRnum) {
+		System.out.println("dao.게시글 가져오기");
+		
+		Map<String, Integer> map = new HashMap<>();
+		map.put("startRnum", startRnum);
+		map.put("endRnum", endRnum);
+		
+		return sqlSession.selectList("board.select2", map);
 	}
 
 }
